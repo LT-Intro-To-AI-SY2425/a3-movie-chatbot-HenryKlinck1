@@ -45,6 +45,14 @@ def get_actors(movie: Tuple[str, str, int, List[str]]) -> List[str]:
 
 
 def title_by_year(matches: List[str]) -> List[str]:
+    
+    year = int[matches[0]]
+    print(year)
+    result=[]
+    for movie in movie_db
+        if get_year(movie) == year:
+            result.append(get_title (movie))
+
     """Finds all movies made in the passed in year
 
     Args:
@@ -55,6 +63,7 @@ def title_by_year(matches: List[str]) -> List[str]:
         a list of movie titles made in the passed in year
     """
     pass
+
 
 
 def title_by_year_range(matches: List[str]) -> List[str]:
