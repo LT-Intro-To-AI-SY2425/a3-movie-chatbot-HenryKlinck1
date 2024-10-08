@@ -46,8 +46,7 @@ def get_actors(movie: Tuple[str, str, int, List[str]]) -> List[str]:
 
 def title_by_year(matches: List[str]) -> List[str]:
     
-    year = int[matches[0]]
-    print(year)
+    year = int(matches[0])
     result=[]
     for movie in movie_db:
         if get_year(movie) == year:
@@ -63,7 +62,7 @@ def title_by_year(matches: List[str]) -> List[str]:
     Returns:
         a list of movie titles made in the passed in year
     """
-    pass
+    
 
 
 
@@ -106,7 +105,7 @@ def title_before_year(matches: List[str]) -> List[str]:
     year = int(matches[0])
     result = []
     for movie in movie_db:
-        if year < get_year(movie):
+        if year > get_year(movie):
             result.append(get_title(movie))
     return(result)
     
@@ -175,12 +174,12 @@ def actors_by_title(matches: List[str]) -> List[str]:
     Returns:
         a list of actors who acted in the passed in title
     """
-    actor = (matches[0])
-    result = []
+    title = (matches[0])
+    result = set()
     for movie in movie_db:
-        if  actor == get_director(movie):
-            result.append(get_actor(movie))
-    return(result)
+        if  title == get_title(movie):
+            result.update(get_actors(movie))
+    return list(result)
 
 
 def year_by_title(matches: List[str]) -> List[int]:
@@ -192,7 +191,12 @@ def year_by_title(matches: List[str]) -> List[int]:
     Returns:
         a list of one item (an int), the year that the movie was made
     """
-    pass
+    title = (matches[0])
+    result = []
+    for movie in movie_db:
+        if  title == get_title(movie):
+            result.append(get_year(movie))
+    return(result)
 
 
 def title_by_actor(matches: List[str]) -> List[str]:
@@ -204,7 +208,15 @@ def title_by_actor(matches: List[str]) -> List[str]:
     Returns:
         a list of movie titles that the actor acted in
     """
-    pass
+    if not matches or len(matches) != 1:
+        return []
+    actor = matches[0]
+    result = set()
+    for movie in movie_db:
+        if  actor in get_actors(movie):
+            result.add(get_title(movie))
+    return list(result)
+    
 
 
 # dummy argument is ignored and doesn't matter
@@ -245,14 +257,13 @@ def search_pa_list(src: List[str]) -> List[str]:
     """
     user_input = ' '
     result = []
-    for user in pa_list:
-        if user_input == pa_list():
-            if 
-                return(result)
-            else:
+    for user_input in pa_list:
+        if user_input == pa_list(): 
+            return(result)
+        else:
             return ["No answers"]
     return["I don't understand"]
-pass
+
 
 
 def query_loop() -> None:
