@@ -242,7 +242,8 @@ pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
     (["bye"], bye_action),
 ]
 
-
+import re
+from typing import List, Dict, Tuple, Union
 def search_pa_list(src: List[str]) -> List[str]:
     """Takes source, finds matching pattern and calls corresponding action. If it finds
     a match but has no answers it returns ["No answers"]. If it finds no match it
@@ -255,14 +256,26 @@ def search_pa_list(src: List[str]) -> List[str]:
         a list of answers. Will be ["I don't understand"] if it finds no matches and
         ["No answers"] if it finds a match but no answers
     """
-    user_input = ' '
-    result = []
-    for user_input in pa_list:
-        if user_input == pa_list(): 
-            return(result)
-        else:
-            return ["No answers"]
-    return["I don't understand"]
+    query_string = ' '.join(src)
+    
+    for pattern, action in pa_list:
+        regex_pattern = re.sub(r'%|_', '(.*)', ' '.join(pattern))
+        
+        match = re.fullmatch(regex_pattern, query_string, re.IGNORECASE)
+        if match:
+            matches = list(match.groups())
+            responses = action(matches)
+            if not responses:
+                return ["No answers"]
+            return responses
+
+    return ["I don't understand"]
+
+    # for pat, act in pa_list:
+    #     val = match(pat, src)
+    #     if val!=None:
+    #         result=act(val)
+    #         return result
 
 
 
